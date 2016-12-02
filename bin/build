@@ -1,0 +1,9 @@
+#!/bin/bash
+
+if [[ "$1" == "" ]]; then
+    echo "Usage:";
+    echo "  build <name>";
+else
+    ltext "template.html $1.title $1.md" > $1.html
+fi
+

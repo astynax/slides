@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [[ "$1" == "" ]]; then
+    echo "Usage:";
+    echo "  new <name>";
+else
+    cp template/template.title "$1.title"
+    cp template/template.md "$1.md"
+fi
+
