@@ -64,10 +64,10 @@ twice f x = f    (f x)
 -- or
 twice f x = f <|  f x  -- x |> f |> f
 -- or
-twice f   = f <<< f    -- f >>> f
+twice f   = f << f    -- f >> f
 
-(<<<) : (b -> c) -> (a -> b) -> a -> c
-(<<<) f g x = f (g x)
+(<<) : (b -> c) -> (a -> b) -> a -> c
+(<<) f g x = f (g x)
 ```
 
 ---
