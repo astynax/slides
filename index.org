@@ -1,0 +1,17 @@
+#+TITLE: Slides for astynax's talks
+#+OPTIONS: toc:nil num:nil title:nil
+#+OPTIONS: html-style:nil
+#+BEGIN_EXPORT html
+<style>
+body { color: #073642; background-color: #fdf6e3; }
+a { color: #268bd2; }
+table tr:nth-child(odd) td { background-color: #eee8d5; }
+</style>
+#+END_EXPORT
+Slides for [[https://github.com/astynax][astynax]]'s talks:
+| 2016/10 | Фронтенд + Elm = Фронтенд - pain                                    | [[./elm_minus_pain.html][HTML]]           |
+| 2016/10 | The Elm Architecture: model, view & update your UI (FPConf'16)      | [[./tea_fpconf2016.html][HTML]]           |
+| 2017/04 | react-flux: React-powered Web GUI на Haskell (ruHaskell Meetup '17) | [[./react-flux_ruhaskell2017.html][HTML]] |
+| 2017/10 | Reactive Programming (для meetup.com/progmsk)                       | [[./reactive.html][HTML]]                 |
+| 2018/02 | Elm и The Elm Architecture: что это и зачем это всё? (FProg Spb)    | [[./elm-wtf.html][HTML]]                  |
+| 2019/02 | Функциональное программирование: цели, способы, применимость        | [[./2019-about-fp.pdf][PDF]]              |
