@@ -51,7 +51,7 @@ twoDividedBy = (2 /)
 #+BEGIN_SRC haskell
 circle :: Float             -> Shape
 filled :: Color    -> Shape -> Image
-scaled :: Float             -> Image
+scaled :: Float    -> Image -> Image
 moved  :: Position -> Image -> Image
 
 ($) :: (a -> b) -> a -> b
@@ -210,7 +210,7 @@ app req respond =
 withLogging :: Middleware
 withLogging app req respond = do
   -- log request
-  app req $ \respocse -> do
+  app req $ \response -> do
     -- log response
     respond response
 #+END_SRC
