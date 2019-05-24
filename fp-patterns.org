@@ -1,0 +1,228 @@
+#+TITLE: Функциональный дизайн и паттерны ФП
+#+AUTHOR: Алексей Пирогов, Hexlet
+
+* Функциональное программирование кратко
+- Функции — это значения
+- Композируем всё
+
+* Функции–значения
+#+BEGIN_SRC haskell
+-- Haskell
+map    :: (a -> b)    -> [a] -> [b]
+filter :: (a -> Bool) -> [a] -> [a]
+
+(.)    :: (a -> b) -> (b -> c) -> (a -> c)
+
+flip   :: (a -> b -> c) -> (b -> a -> c)
+#+END_SRC
+
+* Каррирование
+#+BEGIN_SRC haskell
+-- Haskell
+add     :: (Int, Int)    -> Int
+div     :: (Int, Int)    -> Int
+
+add (12, 30) -- 42
+
+curry   :: ((a, b) -> c) -> (a -> b -> c)
+uncurry :: (a -> b -> c) -> ((a, b) -> c)
+
+curry add :: Int -> Int -> Int
+#+END_SRC
+
+* Частичное применение
+#+BEGIN_SRC clojure
+;; Clojure
+(def add5 (partial + 5))
+
+(add5 10) ;; 15
+#+END_SRC
+
+#+BEGIN_SRC haskell
+-- Haskell
+add5 = curry add 5
+add5 = (+ 5)
+
+twoDividedBy = flip div 2
+twoDividedBy = (2 /)
+#+END_SRC
+
+* Соединяем функции
+#+BEGIN_SRC haskell
+circle :: Float             -> Shape
+filled :: Color    -> Shape -> Image
+scaled :: Float             -> Image
+moved  :: Position -> Image -> Image
+
+($) :: (a -> b) -> a -> b
+
+moved TopLeftCorner  -- moved TopLeftCorner
+  $ scaled 2.0       --   ( scaled 2.0
+    $ filled Red     --     ( filled Red
+      $ circle 200   --       ( circle 200 ) ) )
+#+END_SRC
+
+* Соединяем функции
+#+BEGIN_SRC elm
+-- Elm
+circle 200
+  |> fill Red
+  |> scale 2.0
+  |> move TopLeftCorner
+#+END_SRC
+
+#+BEGIN_SRC clojure
+;; Clojure
+(->> (circle 200)
+  (fill :red)
+  (scale 2.0)
+  (move :top-left-corner))
+#+END_SRC
+
+* Композиция функций
+#+BEGIN_SRC haskell
+-- Haskell
+f x = g  (h  (k x))
+f x = g $ h $ k x
+f   = g . h . k
+#+END_SRC
+
+#+BEGIN_SRC clojure
+;; Clojure
+(defn f [x]         (g (h (k x))))
+(def  f     (compose g  h  k))
+#+END_SRC
+
+* Композиция функций нескольких аргументов
+#+BEGIN_SRC haskell
+-- Haskell
+f x y = g  (h x  (k y))
+f x   = g . h x . k
+#+END_SRC
+
+#+BEGIN_SRC clojure
+;; Clojure
+(defn f [x y]         (g         (h x (k y))))
+(defn f [x]   (compose g (partial h x) k))
+#+END_SRC
+
+* Паттерны, наконец
+** Паттерны, наконец
+
+* "bracket"
+** "bracket" — работа с ресурсами
+
+* "bracket"
+#+BEGIN_SRC haskell
+-- Haskell
+bracket
+  :: IO a        -- выделение ресурса
+  -> (a -> IO b) -- освобождение ресурса
+  -> (a -> IO c) -- потребление ресурса
+
+withDB conn =
+  bracket (connectDB conn) closeDB
+
+withLogger level =
+  bracket (initLogger level) closeLogger
+#+END_SRC
+
+* "bracket"
+#+BEGIN_SRC haskell
+-- Haskell
+data Env = Env
+  { db     :: DB
+  , logger :: Logger }
+
+run :: Env -> IO ()
+
+main =
+  withDB "dev" $ \db ->
+    withLogger Debug $ \logger ->
+      run Env{ db = db, logger = logger }
+#+END_SRC
+
+* Reader
+** Reader, также известный как Окружение
+
+* Reader
+#+BEGIN_SRC haskell
+-- Haskell
+prepareData :: Settings -> Input  -> Data
+calculate   :: Settings -> Data   -> Result
+plotResult  :: Settings -> Result -> Image
+#+END_SRC
+
+* Reader
+#+BEGIN_SRC haskell
+-- Haskell
+plotInput :: Settings -> Input -> Image
+plotInput = runReader
+  $ plotResult <=< calculate <=< prepareData
+#+END_SRC
+
+* State
+** State, или изменяемое состояние
+
+* State
+#+BEGIN_SRC haskell
+-- Haskell
+items   :: CharId -> Game -> ([Item], Game)
+popItem :: Item   -> Game -> ((),     Game)
+heal    :: Int    -> Game -> ((),     Game)
+#+END_SRC
+
+* State
+#+BEGIN_SRC haskell
+-- Haskell
+tryToHeal :: Game -> (Bool, Game)
+tryToHeal = runState $ do
+  xs <- items
+  case filter isPotion xs of
+    (potion: _) -> do
+      popItem potion
+      heal (getHP potion)
+      return True
+    _           ->
+      return False
+#+END_SRC
+
+* Middleware
+** Middleware — оборачиваем функции в функции
+
+* Middleware
+#+BEGIN_SRC haskell
+type Application
+  =  Request
+  -> (Response -> IO ResponseReceived)
+  -> IO ResponseReceived
+
+type Middleware
+  = Application -> Application
+#+END_SRC
+
+* Middleware
+#+BEGIN_SRC haskell
+app :: Application
+app req respond =
+  respond $ responseLBS status200 [] "Hello!"
+
+withLogging :: Middleware
+withLogging app req respond = do
+  -- log request
+  app req $ \respocse -> do
+    -- log response
+    respond response
+#+END_SRC
+
+* А ещё у нас есть
+- Моноид
+- Функтор
+- Аппликативный функтор
+- Монада
+- Свободная монада
+- Свободнейшая монада
+- …
+
+* Конец
+** Всем спасибо!
