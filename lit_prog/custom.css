@@ -1,0 +1,43 @@
+body {
+	background: none repeat scroll 0% 0% #000;
+}
+
+.slide header:only-child h1 {
+	color: #268bd2;
+	font-size: 50pt;
+}
+
+.slide h1 {
+	color: #268bd2;
+}
+
+.slide {
+	width: 1024px;
+	height: 768px;
+}
+
+div.slide {
+	background-color: #073642;
+	background: #073642;
+}
+
+div.slide p {
+	font-size: 24pt;
+}
+
+div.slide li {
+	font-size: 24pt;
+}
+
+section, .slide {
+	color: #93a1a1;
+	font-size: 25pt;
+}
+
+strong {
+	color: #b58900;
+}
+
+pre {
+    font-size: 20pt;
+}

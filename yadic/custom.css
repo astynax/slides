@@ -1,0 +1,55 @@
+section {
+    font: 24pt "Lucida Grade", Times, Verdana, sans-serif;
+}
+
+header:not(:only-child) {
+    font-family: "Lucida Grade", Times, Verdana, sans-serif;
+    letter-spacing: normal;
+}
+
+.slide header:only-child h1 {
+    font-size: 45pt;
+    font-family: "Lucida Grade", Times, Verdana, sans-serif;
+}
+
+div.slide {
+    background: #FFF;
+}
+
+div.slide p {
+    font-size: 24pt;
+}
+
+div.slide li {
+    font-size: 24pt;
+}
+
+pre {
+    font-size: 18pt;
+}
+
+.codehilite .nn, .codehilite .nc, .codehilite .nf {
+    color: #07f;
+}
+
+.codehilite .p, .codehilite .o, .codehilite .p-Indicator {
+    color: #070;
+}
+
+a {
+    border: none;
+    color: #07f;
+}
+
+.slide.centered .inner {
+    text-align: center;
+}
+
+.slide.centered header {
+    display: none;
+    height: 0px;
+}
+
+.slide.centered section {
+    margin-top: 30px;
+}
